@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.12] - 2026-11-05
+
+### ✨ Added
+
+- **Sungrow SHx — Import Power Limit (holding reg 32998, U16, 0.01 kW)**: Undocumented site import cap for **RS, RT, and T** (not MG*RL or SH*RL). Range 0.01–50.00 kW. Read/write and actual import limiting verified on **SH10RS**. Template v1.2.27.
+
+### 🐛 Fixed
+
+- **Sungrow SHx — SH15T battery capacity**: Register 5638 (`battery_capacity`) now includes **SH15T**. Without it, `battery_charge`, `battery_charge_nom`, and `battery_charge_health_rated` stay unavailable. Live read on an SH15T was 20.27 kWh. Template v1.2.28.
+- **Sungrow SHx — running-state bits**: `pv_generating`, `battery_charging`, `battery_discharging`, `exporting_power`, `importing_power`, `positive_load_power`, and `negative_load_power` read the bitmask from `running_state` `raw_value`. The flags state is text, so `is_number` on the state never matched and the power workaround always ran. The workaround remains when `raw_value` is not a number. Template v1.2.29.
+
+## [1.3.11] - 2026-11-05
+
+### 🐛 Fixed
+
+- **Template stem lookup on the event loop**: `async_setup` scans template names once in the executor. `resolve_template_key` then reads that cache only. Loading a template registers its file stem again. Generic YAML download path checks also run in the executor (HACS default review).
+
 ## [1.3.10] - 2026-10-29
 
 ### 🐛 Fixed
